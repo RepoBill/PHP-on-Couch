@@ -97,6 +97,8 @@ class CouchClient extends Couch
         'startkey_docid' => ['name' => 'startkey_docid', 'filter' => 'string'],
         'endkey_docid' => ['name' => 'endkey_docid', 'filter' => 'string'],
         'limit' => ['name' => 'limit', 'filter' => 'int'],
+        // teste de partition
+        'partition' => ['name' => 'partition', 'filter' => 'string'],
         //Deprecated in CouchDB 2.1.1 -> Removed in CouchDB 3.0.0
         'stale' => ['name' => 'stale', 'filter' => 'enum', 'enum' => ['ok', 'update_after']],
         'descending' => ['name' => 'descending', 'filter' => 'jsonEncodeBoolean'],
@@ -1129,7 +1131,9 @@ class CouchClient extends Couch
         if (!$id || !$name) {
             throw new InvalidArgumentException('You should specify view id and name');
         }
+
         $url = '/'.urlencode($this->dbname).'/_design/'.urlencode($id).'/_view/'.urlencode($name);
+
         if ($this->resultsAsCouchDocs) {
             $this->include_docs(true);
         }
